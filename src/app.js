@@ -1,9 +1,11 @@
 import React from "react";
 
+import RoomAllocation from "./pages/RoomAllocation";
+
 export default () => {
   return (
     <>
-      <h1>hello world</h1>
+      <RoomAllocation />
     </>
   );
 };
