@@ -1,25 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
-import CustomInputNumber from "../components/CustomInputNumber";
+import Room from "../components/Room";
 
-export default () => {
-  const [val, setVal] = useState(22);
+export default (props) => {
+  const maxGuestOfRoom = 4;
+  const { room, onChange } = props;
+
+  const [result, setResult] = useState(
+    Array.from(Array(room).keys()).map((v) => ({
+      adult: 1,
+      child: 0,
+    }))
+  );
+
+  useEffect(() => {
+    onChange(result);
+  }, result);
 
   return (
     <>
-      <h1>hello world</h1>
-      <CustomInputNumber
-        min={0}
-        max={30}
-        step={3}
-        name="name"
-        value={val}
-        disabled={false}
-        onChange={(evt) => {
-          setVal(Number(evt.target.value));
-        }}
-        onBlur={(evt) => console.log(evt)}
-      />
+      {Array.from(Array(room).keys()).map((v) => (
+        <Room
+          key={v}
+          max={maxGuestOfRoom}
+          onChange={(r) => {
+            let c = JSON.parse(JSON.stringify(result));
+            c[v] = r;
+            setResult(c);
+          }}
+        />
+      ))}
     </>
   );
 };

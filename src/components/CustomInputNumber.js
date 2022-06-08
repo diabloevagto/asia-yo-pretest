@@ -5,6 +5,7 @@ const Div = styled.div`
   display: flex;
   flex-direction: row;
   gap: 8px;
+  height: 48px;
 
   > input {
     width: 80px;
@@ -34,22 +35,25 @@ export default (props) => {
 
   const onSubClick = useCallback(() => {
     emitChange(value - step > min ? value - step : min);
-  }, [min, step, value]);
+  }, [min, step, value, disabled]);
 
   const onAddClick = useCallback(() => {
     emitChange(value + step < max ? value + step : max);
-  }, [max, step, value]);
+  }, [max, step, value, disabled]);
 
-  const emitChange = useCallback((v) => {
-    if (v >= min && v <= max && disabled === false) {
-      onChange({
-        target: {
-          name,
-          value: v,
-        },
-      });
-    }
-  }, []);
+  const emitChange = useCallback(
+    (v) => {
+      if (v >= min && v <= max && disabled === false) {
+        onChange({
+          target: {
+            name,
+            value: v,
+          },
+        });
+      }
+    },
+    [min, max, disabled, onChange]
+  );
 
   return (
     <Div>
